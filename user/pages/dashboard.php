@@ -520,3 +520,7 @@ startUserLayout($page_title, $current_page);
     }
 }
 </style>
+
+<?php
+endUserLayout();
+?>
