@@ -88,9 +88,9 @@ startUserLayout($page_title, $current_page);
 
         <div class="user-stat-card">
             <div class="user-stat-icon">
-                <i class="fas fa-dollar-sign"></i>
+                <i class="fas fa-money-bill-wave"></i>
             </div>
-            <div class="user-stat-value">$<?php echo number_format($total_spent, 2); ?></div>
+            <div class="user-stat-value">₱<?php echo number_format($total_spent, 2); ?></div>
             <div class="user-stat-label">Total Spent</div>
         </div>
     </div>
@@ -180,8 +180,8 @@ startUserLayout($page_title, $current_page);
             </div>
         </div>
 
-        <!-- Quick Actions -->
-        <div class="user-card">
+    <!-- Quick Actions -->
+    <div class="user-card quick-actions-card">
             <div class="user-card-header">
                 <h3 class="user-card-title">Quick Actions</h3>
             </div>
@@ -420,65 +420,82 @@ startUserLayout($page_title, $current_page);
     font-size: 0.875rem;
 }
 
-/* Quick Actions Grid */
-.quick-actions-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
+        /* Quick Actions: single horizontal row on desktop, right-aligned */
+        .quick-actions-grid {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem; /* tighter gap so cards fit */
+            flex-wrap: nowrap; /* keep single row on wide viewports */
+            justify-content: flex-start; /* start inside panel so nothing is clipped */
+            align-items: stretch;
+            padding-bottom: 0.25rem;
+        }
 
-.quick-action-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 1.5rem;
-    background: #f8fafc;
-    border-radius: 0.75rem;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s ease;
-    border: 1px solid #e2e8f0;
-}
+        /* Make cards percentage-based so 4 always fit inside the panel width */
+        .quick-actions-grid .quick-action-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.25rem 1rem;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            /* width = (100% - totalGap) / 4 ; totalGap = 3 * 0.5rem = 1.5rem */
+            flex: 1 1 calc((100% - 1.5rem) / 4);
+            min-width: 110px; /* allow cards to shrink but not too small */
+            max-width: none;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
 
-.quick-action-card:hover {
-    background: white;
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
+        .quick-actions-grid .quick-action-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+        }
 
-.quick-action-card .action-icon {
-    width: 3rem;
-    height: 3rem;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border-radius: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-}
+        .quick-actions-grid .quick-action-card .action-icon {
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.12);
+        }
 
-.quick-action-card h4 {
-    margin: 0 0 0.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #2d3748;
-}
+        .quick-actions-grid .quick-action-card .action-content p {
+            display: block;
+            margin-top: 0.5rem;
+            color: #718096;
+        }
 
-.quick-action-card p {
-    margin: 0;
-    color: #718096;
-    font-size: 0.875rem;
-    line-height: 1.4;
-}
+        /* Place the Quick Actions panel to the right and give it room */
+        .user-card.quick-actions-card {
+            grid-column: 1 / -1; /* span full width of the dashboard grid */
+            max-width: 980px; /* limit maximum width so it doesn't stretch edge-to-edge */
+            margin-left: auto; /* align the panel to the right */
+            width: 100%;
+        }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
+    }
+    /* allow quick actions to be two columns on tablet/medium screens */
+    .quick-actions-grid {
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+    }
+    .quick-actions-grid .quick-action-card {
+        flex: 1 1 calc((100% - 1rem) / 2);
+        max-width: calc((100% - 1rem) / 2);
     }
 }
 
@@ -488,9 +505,15 @@ startUserLayout($page_title, $current_page);
         text-align: center;
         gap: 1.5rem;
     }
-    
     .quick-actions-grid {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .quick-actions-grid .quick-action-card {
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
     }
     
     .order-header {
