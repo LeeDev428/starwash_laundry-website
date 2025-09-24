@@ -84,25 +84,11 @@ function renderAdminSidebar($currentPage = '') {
                     <i class="fas fa-bell"></i>
                     <span>Notifications</span>
                 </a>
-                <a href="../pages/logs.php" class="nav-item <?php echo $currentPage === 'logs' ? 'active' : ''; ?>">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>System Logs</span>
-                </a>
+                <!-- System Logs removed per request -->
             </div>
         </nav>
         
-        <div class="sidebar-footer">
-            <div class="system-status">
-                <div class="status-item">
-                    <i class="fas fa-circle text-success"></i>
-                    <span>System Online</span>
-                </div>
-                <div class="status-item">
-                    <i class="fas fa-server"></i>
-                    <span>Server: 99.9%</span>
-                </div>
-            </div>
-        </div>
+        <!-- Sidebar footer (system status) removed -->
     </aside>
 <?php
 }
