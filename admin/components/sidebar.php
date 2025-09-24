@@ -7,7 +7,6 @@ function renderAdminSidebar($currentPage = '') {
             <div class="logo">
                 <i class="fas fa-tshirt"></i>
                 <h2>StarWash</h2>
-                <span class="admin-badge">ADMIN</span>
             </div>
         </div>
         
@@ -28,24 +27,20 @@ function renderAdminSidebar($currentPage = '') {
                     <i class="fas fa-cogs" aria-hidden="true"></i>
                     <span>Services</span>
                 </a>
+                <!-- Profile moved here under Services to remove divider and place it directly in the main nav -->
 
-                <!-- Profile moved to a bottom circular button for icon-only sidebar -->
-            </div>
-        </nav>
-        
-        <!-- Bottom profile button: use same nav-item design as other sidebar links; preserve avatar logic -->
-        <div class="sidebar-footer">
-            <a href="../pages/profile.php" class="nav-item show-label sidebar-profile-btn <?php echo $currentPage === 'profile' ? 'active' : ''; ?>" aria-label="Profile" title="Profile">
-                <span class="sidebar-profile-icon">
+                <a href="../pages/profile.php" class="nav-item show-label <?php echo $currentPage === 'profile' ? 'active' : ''; ?>" aria-label="Profile">
                     <?php if (!empty($_SESSION['avatar'])): ?>
                         <img src="<?php echo htmlspecialchars($_SESSION['avatar']); ?>" alt="Profile avatar" class="sidebar-profile-avatar">
                     <?php else: ?>
                         <i class="fas fa-user" aria-hidden="true"></i>
                     <?php endif; ?>
-                </span>
-                <span class="sidebar-profile-label">Profile</span>
-            </a>
-        </div>
+                    <span>Profile</span>
+                </a>
+            </div>
+        </nav>
+        
+        <!-- footer removed; Profile link moved into main nav -->
     </aside>
 <?php
 }
