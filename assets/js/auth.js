@@ -13,10 +13,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Real-time validation
     const inputs = document.querySelectorAll('input[required]');
     inputs.forEach(input => {
+        // Only validate on blur if the user entered something; do not show "required" when
+        // a user simply focuses and leaves the field empty before submitting.
         input.addEventListener('blur', function() {
-            validateField(this);
+            if (this.value && this.value.trim() !== '') {
+                validateField(this);
+            } else {
+                // clear any non-submission validation message on blur for empty fields
+                clearFieldError(this);
+            }
         });
-        
+
         input.addEventListener('input', function() {
             clearFieldError(this);
         });
@@ -152,26 +159,27 @@ function validateField(field) {
 // Show field error
 function showFieldError(field, message) {
     clearFieldError(field);
-    
-    const inputGroup = field.closest('.input-group') || field.closest('.form-group');
-    inputGroup.classList.add('error');
-    
+
+    // Put the error message inside the .form-group so the .input-group size doesn't change
+    const formGroup = field.closest('.form-group');
+    const target = formGroup || field.closest('.input-group') || field.parentElement;
+    if (formGroup) formGroup.classList.add('error');
+
     const errorElement = document.createElement('div');
     errorElement.className = 'field-error';
     errorElement.textContent = message;
-    
-    inputGroup.appendChild(errorElement);
+
+    target.appendChild(errorElement);
 }
 
 // Clear field error
 function clearFieldError(field) {
-    const inputGroup = field.closest('.input-group') || field.closest('.form-group');
-    inputGroup.classList.remove('error');
-    
-    const existingError = inputGroup.querySelector('.field-error');
-    if (existingError) {
-        existingError.remove();
-    }
+    const formGroup = field.closest('.form-group');
+    const target = formGroup || field.closest('.input-group') || field.parentElement;
+    if (formGroup) formGroup.classList.remove('error');
+
+    const existingError = target.querySelector('.field-error');
+    if (existingError) existingError.remove();
 }
 
 // Password strength checker
