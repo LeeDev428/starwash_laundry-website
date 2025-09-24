@@ -13,15 +13,32 @@
     flex-direction: column;
 }
 
+/* reserve space for fixed header so content doesn't sit underneath
+   use slightly less than full header height so dashboard sits closer */
+.user-layout {
+    padding-top: 0; /* header is fixed; content will be positioned under it via app-content-wrap */
+}
+
 /* User Header - Modern Glass Morphism */
 .user-header {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 1rem 0;
-    position: sticky;
+    /* richer purple header */
+    background: linear-gradient(90deg, #6c5ce7 0%, #8e7efc 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    height: var(--site-header-height);
+    position: fixed;
+    left: 0;
     top: 0;
-    z-index: 1000;
+    width: 100%;
+    z-index: 3000; /* ensure header sits above sidebars and content */
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 6px 18px rgba(10, 10, 20, 0.06);
+}
+
+/* ensure header contents are vertically centered inside fixed height */
+.header-container {
+    display: flex;
+    align-items: center;
 }
 
 .header-container {
@@ -31,6 +48,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
 }
 
 .header-left {
@@ -65,7 +83,7 @@
 
 .user-header .logo i {
     font-size: 2rem;
-    background: linear-gradient(135deg, #f093fb, #f5f7fa);
+    background: linear-gradient(135deg, #b794ff, #f093fb);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -84,7 +102,7 @@
 .page-title {
     margin: 0;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 600;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -103,36 +121,34 @@
 
 .user-header .action-btn {
     position: relative;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    font-size: 1rem;
+    background: rgba(255,255,255,0.95); /* solid light button for contrast */
+    color: #2d3748; /* dark text for readability */
+    border: 1px solid rgba(0,0,0,0.06);
+    font-size: 1.05rem;
     cursor: pointer;
-    padding: 0.75rem;
-    border-radius: 0.75rem;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    padding: 0.9rem 1.05rem;
+    border-radius: 0.95rem;
+    transition: all 0.18s ease;
 }
 
 .user-header .action-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 24px rgba(20, 20, 40, 0.08);
 }
 
 .user-header .action-btn .badge {
     position: absolute;
     top: -0.25rem;
     right: -0.25rem;
-    background: linear-gradient(135deg, #f093fb, #f5f7fa);
-    color: #2d3748;
+    background: #ff6b6b; /* strong accent for visibility */
+    color: white;
     font-size: 0.75rem;
     padding: 0.125rem 0.375rem;
     border-radius: 9999px;
     min-width: 1.25rem;
     text-align: center;
     font-weight: 600;
-    box-shadow: 0 2px 8px rgba(240, 147, 251, 0.4);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 /* User Profile in Header */
@@ -141,11 +157,11 @@
     align-items: center;
     gap: 1rem;
     position: relative;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.9rem 1.35rem;
+    border-radius: 2.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(16px);
 }
 
 .user-profile .profile-avatar {
@@ -161,6 +177,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .avatar-fallback {
@@ -183,6 +200,73 @@
     font-weight: 600;
     color: white;
     font-size: 0.875rem;
+}
+
+/* Reference-style layout: fixed left green sidebar and centered white dashboard card */
+.app-shell {
+    display: flex;
+    align-items: flex-start; /* place content at top */
+    min-height: calc(100vh - var(--site-header-height));
+}
+
+.left-brand-sidebar {
+    width: 320px; /* small extra width to comfortably fit the inner card */
+    background: linear-gradient(180deg, var(--brand-grad-start) 0%, var(--brand-grad-end) 100%);
+    color: white;
+    padding: 1.75rem 1.5rem;
+    position: fixed;
+    left: 0;
+    top: var(--site-header-height); /* ensure it sits directly under the header */
+    bottom: 0;
+    border-radius: 0 16px 16px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    z-index: 2000; /* below header but above background */
+}
+
+ .left-brand-sidebar .brand {
+     display: flex;
+     align-items: center;
+     gap: 1rem;
+     margin-bottom: 2rem;
+}
+
+.left-brand-sidebar .nav {
+    margin-top: 2rem;
+}
+
+.app-content-wrap {
+    margin-left: 340px; /* match left-brand-sidebar (320px) + small gap */
+    width: calc(100% - 340px);
+    /* ensure content clears the fixed header: use header height minus a small visual overlap allowance */
+    padding: calc(var(--site-header-height) - 20px) 3.5rem 2.5rem 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.dashboard-shell {
+    width: 100%;
+    max-width: 980px;
+    /* softer off-white with faint purple tint to avoid stark white */
+    background: linear-gradient(180deg, #fbf9ff 0%, #f6f4ff 100%);
+    border-radius: 18px;
+    padding: 1.5rem 2rem; /* slightly tighter so it visually hugs the header */
+    margin-top: 8px; /* small gap so header shadow doesn't cut the card */
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.02);
+    border-left: 1px solid rgba(255,255,255,0.6); /* subtle separator from sidebar */
+}
+
+/* make sure main panels inside dashboard have white cards */
+.dashboard-shell .user-card,
+.dashboard-shell .user-stat-card,
+.dashboard-shell .service-card {
+    background: white;
+}
+
+@media (max-width: 900px) {
+    .left-brand-sidebar { display: none; }
+    .app-content-wrap { margin-left: 0; width: 100%; padding: 1rem; }
 }
 
 .user-profile .profile-status {
@@ -250,6 +334,12 @@
 }
 
 /* User Main Layout */
+:root {
+    --site-header-height: 96px;
+    --brand-grad-start: #6c5ce7;
+    --brand-grad-end: #8e7efc;
+}
+
 .user-main {
     display: flex;
     flex: 1;
@@ -260,18 +350,21 @@
     padding: 2rem;
 }
 
+/* Ensure top-level dashboard has enough spacing when header is sticky */
+/* user-dashboard spacing handled via .user-layout */
+
 /* User Sidebar - Elegant Card Design */
 .user-sidebar {
-    width: 320px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 1.5rem;
-    padding: 2rem;
-    height: fit-content;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    position: sticky;
-    top: 6rem;
+    width: calc(100% - 0.5rem); /* ensure it fits inside .left-brand-sidebar padding */
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    height: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    position: relative; /* contained inside the fixed brand sidebar */
+    margin-top: 12px; /* sit slightly below the top of the brand sidebar */
 }
 
 .user-welcome {
@@ -284,15 +377,158 @@
 .welcome-avatar {
     width: 4rem;
     height: 4rem;
-    background: linear-gradient(135deg, #667eea, #764ba2);
     border-radius: 50%;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 2rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
     margin: 0 auto 1rem;
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.welcome-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Profile settings preview avatar */
+.current-avatar {
+    margin: 0.5rem 0 1rem 0;
+}
+.current-avatar .profile-preview-img {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.25);
+}
+
+/* Profile settings two-column layout */
+.profile-layout .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Position profile alerts absolutely so they don't push content (overlay inside profile area) */
+.profile-page { position: relative; }
+.profile-page .alert {
+    position: absolute;
+    top: -0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 4rem);
+    max-width: 920px;
+    color: var(--gray-900);
+    background: linear-gradient(180deg, #f0fff4, #ffffff);
+    box-shadow: var(--shadow-md);
+    padding: 0.85rem 1.25rem;
+    border-radius: 0.75rem;
+    display: block;
+    z-index: 1200;
+}
+
+.profile-page .alert.success { border-left: 4px solid var(--success); }
+.profile-page .alert.error { border-left: 4px solid var(--error); }
+
+.profile-page .alert.hidden { opacity: 0; transform: translate(-50%, -12px); pointer-events: none; }
+
+.profile-grid-left {
+    background: transparent;
+}
+
+.profile-form .form-row.actions {
+    /* place the actions into the form's second column so the button appears under the inputs */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 0.75rem;
+}
+
+.profile-form .form-row.actions .btn {
+    grid-column: 2;
+    justify-self: center; /* center within the input column */
+}
+
+/* In-page profile alert transitions */
+.profile-page .alert {
+    opacity: 1;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.profile-page .alert.hidden {
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+}
+
+.profile-grid-right .profile-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+.profile-card-avatar {
+    margin-bottom: 1rem;
+}
+
+.profile-card-avatar .profile-preview-img {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+}
+
+.profile-avatar-placeholder {
+    width: 7rem;
+    height: 7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    color: white;
+    font-size: 2.25rem;
+    margin: 0 auto;
+}
+
+.profile-card-actions {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.profile-card-actions .btn {
+    min-width: 160px;
+    padding: 0.55rem 1rem;
+    border-radius: 0.6rem;
+}
+
+@media (max-width: 480px) {
+    .profile-card-actions .btn {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+.profile-card-meta h4 { margin: 0; }
+.profile-card-meta .muted { color: #718096; margin: 0.25rem 0 0; }
+
+@media (max-width: 900px) {
+    .profile-layout .profile-grid { grid-template-columns: 1fr; }
+    .profile-grid-right { order: 2; }
+    .profile-grid-left { order: 1; }
+}
+
+@media (max-width: 720px) {
+    .profile-page .alert { width: calc(100% - 2rem); left: 1rem; transform: none; }
 }
 
 .welcome-text h3 {
@@ -333,8 +569,9 @@
 .user-sidebar .nav-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
+    /* center the label text horizontally */
+    justify-content: center;
+    padding: 1rem 1rem;
     color: #4a5568;
     text-decoration: none;
     border-radius: 0.75rem;
@@ -342,6 +579,8 @@
     margin-bottom: 0.5rem;
     position: relative;
     overflow: hidden;
+    /* leave space on the left for the icon */
+    padding-left: 3.25rem;
 }
 
 .user-sidebar .nav-item::before {
@@ -378,9 +617,14 @@
 }
 
 .user-sidebar .nav-item i {
+    /* position icon at fixed left so label can be centered */
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
     width: 1.25rem;
-    margin-right: 0.75rem;
     text-align: center;
+    margin-right: 0;
 }
 
 .user-sidebar .nav-badge {
@@ -391,6 +635,11 @@
     font-size: 0.75rem;
     font-weight: 600;
     box-shadow: 0 2px 8px rgba(240, 147, 251, 0.4);
+    /* keep badge visible on the right */
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* Sidebar Promotion */
@@ -473,6 +722,13 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.page-inner-title h2 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    color: #2d3748;
+    font-weight: 700;
+}
+
 /* User Cards */
 .user-card {
     background: white;
@@ -490,8 +746,8 @@
 
 .user-card-header {
     padding: 1.5rem;
-    border-bottom: 1px solid #f7fafc;
-    background: linear-gradient(135deg, #f8fafc, #ffffff);
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+    background: linear-gradient(135deg, #fbf9ff, #f6f4ff);
 }
 
 .user-card-body {
@@ -532,7 +788,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #7a5cff, #8f6ef6);
 }
 
 .user-stat-card:hover {
@@ -543,7 +799,7 @@
 .user-stat-icon {
     width: 3rem;
     height: 3rem;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #7a5cff, #8f6ef6);
     border-radius: 1rem;
     display: flex;
     align-items: center;
@@ -591,7 +847,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #7a5cff, #8f6ef6);
 }
 
 .service-card:hover {
@@ -725,16 +981,13 @@
 
 @media (max-width: 1024px) {
     .user-sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        transform: translateX(-100%);
-        z-index: 2000;
-        transition: transform 0.3s ease;
-        width: 280px;
-        margin-top: 0;
-        border-radius: 0;
+    /* Only fixed on mobile, sticky on desktop */
+    position: sticky;
+    top: 6rem;
+    height: fit-content;
+    width: 320px;
+    margin-top: 0;
+    border-radius: 1.5rem;
     }
     
     .user-sidebar.open {
