@@ -164,7 +164,7 @@ function createOrderModal(orderId) {
                 </div>
                 <div class="detail-row">
                     <label>Amount:</label>
-                    <span>$15.99</span>
+                    <span>₱15.99</span>
                 </div>
                 <div class="detail-row">
                     <label>Order Date:</label>
