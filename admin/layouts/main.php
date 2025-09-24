@@ -7,7 +7,7 @@ if (!isLoggedIn() || !isSeller()) {
     redirectTo('../../pages/login.php');
 }
 
-function startAdminLayout($pageTitle = 'Admin Dashboard', $currentPage = '', $additionalCSS = [], $additionalJS = []) {
+function startAdminLayout($pageTitle = 'Admin Dashboard', $currentPage = '', $additionalCSS = [], $additionalJS = [], $panelMode = 'full') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,11 +39,19 @@ function startAdminLayout($pageTitle = 'Admin Dashboard', $currentPage = '', $ad
 <body class="admin-body">
     <div class="admin-layout">
         <?php
-        require_once '../components/sidebar.php';
-        renderAdminSidebar($currentPage);
+        if ($panelMode === 'panel') {
+            require_once '../components/sidebar-panel.php';
+            renderAdminSidebarPanel($currentPage);
+        } else {
+            require_once '../components/sidebar.php';
+            renderAdminSidebar($currentPage);
+        }
+        // Render orders slide-over panel so it's available on all admin pages
+        require_once '../components/orders-panel.php';
+        renderAdminOrdersPanel();
         ?>
         
-        <main class="admin-main">
+    <main class="admin-main<?php echo $panelMode === 'panel' ? ' panel-mode' : ''; ?>">
             <?php
             require_once '../components/header.php';
             renderAdminHeader($pageTitle);
@@ -62,6 +70,7 @@ function endAdminLayout($additionalJS = []) {
     <!-- Core Scripts -->
     <script src="../../assets/js/main.js"></script>
     <script src="../../assets/js/admin/admin.js"></script>
+    <script src="../../assets/js/admin/orders.js"></script>
     
     <!-- Additional JS -->
     <?php foreach ($additionalJS as $js): ?>
