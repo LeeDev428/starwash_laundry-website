@@ -6,9 +6,10 @@
     color: #1a202c;
 }
 
-/* consistent header height used across admin layout */
+/* layout variables used for header/sidebar alignment */
 :root {
-    --admin-header-height: 72px;
+    --admin-header-height: 72px; /* adjust if header height changes */
+    --sidebar-divider-width: 6px; /* width of the vertical accent line */
 }
 
 .admin-layout {
@@ -22,13 +23,27 @@
     background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
     border-right: 1px solid #2d3748;
     position: fixed;
-    height: calc(100vh - var(--admin-header-height));
+    height: 100vh;
     left: 0;
-    top: var(--admin-header-height);
+    top: 0;
     overflow-y: auto;
     transition: all 0.3s ease;
     z-index: 1000;
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* vertical accent at the right edge of the sidebar that matches header height */
+.admin-sidebar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--sidebar-divider-width);
+    height: var(--admin-header-height);
+    background: linear-gradient(90deg, #5b67d6 0%, #6f3f9e 50%, #764ba2 100%);
+    box-shadow: 0 0 14px rgba(118,75,162,0.12);
+    border-left: 1px solid rgba(255,255,255,0.03);
+    z-index: 1099; /* sit just below the header (header z-index: 1100) */
 }
 
 /* Sidebar footer profile button (for icon-only mode) */
@@ -106,7 +121,8 @@
 
 .sidebar-header {
     padding: 2rem 1.5rem;
-    border-bottom: 1px solid #2d3748;
+    /* softened divider: slightly thinner and lighter */
+    border-bottom: 1px solid rgba(255,255,255,0.06);
     background: rgba(45, 55, 72, 0.5);
 }
 
@@ -346,7 +362,6 @@
 .admin-main {
     flex: 1;
     margin-left: 280px;
-    margin-top: var(--admin-header-height);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -364,8 +379,7 @@ html, body {
     /* Purple gradient header used across the admin app */
     background: linear-gradient(90deg, #5b67d6 0%, #6f3f9e 50%, #764ba2 100%);
     color: #ffffff;
-    height: var(--admin-header-height);
-    padding: 0 1.25rem; /* balanced horizontal padding */
+    padding: 1rem 1.25rem; /* balanced padding to avoid clipping */
     display: grid;
     grid-template-columns: auto 1fr auto; /* left auto, center flexible, right auto */
     align-items: center;
