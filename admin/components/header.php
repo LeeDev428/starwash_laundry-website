@@ -8,12 +8,10 @@ function renderAdminHeader($pageTitle = 'Admin Dashboard', $user = null) {
             <button class="sidebar-toggle" onclick="toggleSidebar()">
                 <i class="fas fa-bars"></i>
             </button>
-            <div class="header-title">
-                <h1><?php echo htmlspecialchars($pageTitle); ?></h1>
-                <span class="breadcrumb">Admin Panel</span>
-            </div>
         </div>
-        
+
+        <!-- header title moved into page content to avoid overlap -->
+
         <div class="header-right">
             <div class="header-actions">
                 <button class="action-btn" onclick="showNotifications()">
