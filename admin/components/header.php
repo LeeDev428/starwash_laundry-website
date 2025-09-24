@@ -33,21 +33,23 @@ function renderAdminHeader($pageTitle = 'Admin Dashboard', $user = null) {
             </div>
             
             <div class="admin-profile">
-                <div class="profile-avatar">
-                    <i class="fas fa-user-shield"></i>
-                </div>
-                <div class="profile-info">
-                    <span class="profile-name"><?php echo htmlspecialchars($user['full_name'] ?? 'Admin'); ?></span>
-                    <span class="profile-role">Administrator</span>
-                </div>
-                <div class="profile-dropdown">
-                    <button class="dropdown-toggle" onclick="toggleProfileMenu()">
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="dropdown-menu" id="profileMenu">
-                        <a href="../pages/profile.php"><i class="fas fa-user"></i> Profile</a>
-                        <a href="../pages/settings.php"><i class="fas fa-cog"></i> Settings</a>
-                        <a href="../../pages/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <div class="profile-pill">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="profile-info">
+                        <span class="profile-name"><?php echo htmlspecialchars($user['full_name'] ?? 'Admin'); ?></span>
+                        <span class="profile-role">Administrator</span>
+                    </div>
+                    <div class="profile-dropdown">
+                        <button class="dropdown-toggle" onclick="toggleProfileMenu()" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" id="profileMenu">
+                            <a href="../pages/profile.php"><i class="fas fa-user"></i> Profile</a>
+                            <a href="../pages/settings.php"><i class="fas fa-cog"></i> Settings</a>
+                            <a href="../../pages/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
                     </div>
                 </div>
             </div>
