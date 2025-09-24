@@ -12,6 +12,8 @@ if (isLoggedIn()) {
 
 $error = '';
 
+$success = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = sanitizeInput($_POST['email']);
     $password = $_POST['password'];
@@ -43,6 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Login failed. Please try again.';
         }
     }
+}
+
+// Show success when redirected from registration
+if (isset($_GET['registered']) && $_GET['registered'] == '1') {
+    $success = 'Account created successfully! Please sign in.';
 }
 ?>
 
