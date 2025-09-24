@@ -58,21 +58,7 @@ function renderAdminSidebar($currentPage = '') {
                 </div>
             </div>
             
-            <div class="nav-section">
-                <span class="nav-section-title">FINANCE</span>
-                <a href="../pages/revenue.php" class="nav-item <?php echo $currentPage === 'revenue' ? 'active' : ''; ?>">
-                    <i class="fas fa-dollar-sign"></i>
-                    <span>Revenue</span>
-                </a>
-                <a href="../pages/payments.php" class="nav-item <?php echo $currentPage === 'payments' ? 'active' : ''; ?>">
-                    <i class="fas fa-credit-card"></i>
-                    <span>Payments</span>
-                </a>
-                <a href="../pages/reports.php" class="nav-item <?php echo $currentPage === 'reports' ? 'active' : ''; ?>">
-                    <i class="fas fa-file-alt"></i>
-                    <span>Reports</span>
-                </a>
-            </div>
+            <!-- FINANCE section removed per request -->
             
             <div class="nav-section">
                 <span class="nav-section-title">SYSTEM</span>
