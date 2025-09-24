@@ -18,6 +18,12 @@ function renderAdminSidebar($currentPage = '') {
                     <i class="fas fa-chart-pie"></i>
                     <span>Dashboard</span>
                 </a>
+
+                <a href="../pages/appointment.php" class="nav-item <?php echo $currentPage === 'appointments' ? 'active' : ''; ?>">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Appointments</span>
+                </a>
+
                 <a href="../pages/analytics.php" class="nav-item <?php echo $currentPage === 'analytics' ? 'active' : ''; ?>">
                     <i class="fas fa-chart-line"></i>
                     <span>Analytics</span>
