@@ -125,7 +125,7 @@ startUserLayout($page_title, $current_page);
                                     </div>
                                     <p class="order-description"><?php echo htmlspecialchars($order['description']); ?></p>
                                     <div class="order-footer">
-                                        <span class="order-price">$<?php echo number_format($order['total_price'], 2); ?></span>
+                                        <span class="order-price">₱<?php echo number_format($order['total_price'], 2); ?></span>
                                         <span class="order-date"><?php echo date('M d, Y', strtotime($order['created_at'])); ?></span>
                                     </div>
                                 </div>
@@ -154,7 +154,7 @@ startUserLayout($page_title, $current_page);
                             <div class="service-card">
                                 <div class="service-card-header">
                                     <h4 class="service-title"><?php echo htmlspecialchars($service['name']); ?></h4>
-                                    <div class="service-price">$<?php echo number_format($service['price'], 2); ?></div>
+                                    <div class="service-price">₱<?php echo number_format($service['price'], 2); ?></div>
                                 </div>
                                 <div class="service-card-body">
                                     <p class="service-description"><?php echo htmlspecialchars($service['description']); ?></p>
