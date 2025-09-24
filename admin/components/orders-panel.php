@@ -57,7 +57,7 @@ function renderAdminOrdersPanel() {
                         <td>Jane Doe</td>
                         <td>3</td>
                         <td>Pending</td>
-                        <td>$12.00</td>
+                        <td>₱12.00</td>
                         <td><button class="admin-btn admin-btn-sm">View</button></td>
                     </tr>
                 </tbody>
