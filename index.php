@@ -97,7 +97,7 @@
                     </div>
                     <h3>Wash & Fold</h3>
                     <p>Professional washing and folding service with premium detergents</p>
-                    <div class="service-price">From $15.99</div>
+                    <div class="service-price">From ₱15.99</div>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -105,7 +105,7 @@
                     </div>
                     <h3>Dry Cleaning</h3>
                     <p>Expert dry cleaning for delicate and formal garments</p>
-                    <div class="service-price">From $25.99</div>
+                    <div class="service-price">From ₱25.99</div>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -113,7 +113,7 @@
                     </div>
                     <h3>Express Service</h3>
                     <p>Quick turnaround for urgent cleaning needs</p>
-                    <div class="service-price">From $19.99</div>
+                    <div class="service-price">From ₱19.99</div>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -121,7 +121,7 @@
                     </div>
                     <h3>Ironing</h3>
                     <p>Professional ironing and pressing services</p>
-                    <div class="service-price">From $12.99</div>
+                    <div class="service-price">From ₱12.99</div>
                 </div>
             </div>
         </div>
