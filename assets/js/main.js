@@ -132,3 +132,46 @@ function hideLoading(loader) {
         loader.remove();
     }
 }
+
+// Profile dropdown toggle and outside click close
+function toggleProfileMenu() {
+    const menu = document.getElementById('profileMenu');
+    if (!menu) return;
+    // Find the closest toggle inside the same profile-dropdown container (robust selection)
+    let toggle = null;
+    const dropdownContainer = document.getElementById('profileMenu') ? document.getElementById('profileMenu').closest('.profile-dropdown') : null;
+    if (dropdownContainer) {
+        toggle = dropdownContainer.querySelector('.dropdown-toggle');
+    }
+    const isShown = menu.classList.toggle('show');
+    console.debug('toggleProfileMenu called, menu shown:', isShown);
+    if (toggle) toggle.setAttribute('aria-expanded', isShown ? 'true' : 'false');
+}
+
+// User header dropdown shim: many user header markup uses toggleUserProfileMenu()
+function toggleUserProfileMenu() {
+    const menu = document.getElementById('userProfileMenu');
+    if (!menu) return;
+    menu.classList.toggle('show');
+}
+
+// Extend outside click handler to close both profile menus
+document.addEventListener('click', function(e) {
+    // Helper to close a menu if the click was outside it and its toggle
+    function maybeClose(menuId) {
+        const menu = document.getElementById(menuId);
+        if (!menu || !menu.classList.contains('show')) return;
+        // find toggle inside same container
+        const container = menu.closest('.profile-dropdown') || menu.closest('.user-profile') || null;
+        const toggle = container ? container.querySelector('.dropdown-toggle') : null;
+        if (menu.contains(e.target) || (toggle && toggle.contains(e.target))) return;
+        menu.classList.remove('show');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    maybeClose('profileMenu');
+    maybeClose('userProfileMenu');
+});
+
+// Dropdown is toggled only by the .dropdown-toggle button (chevron). The profile pill
+// no longer toggles the menu to avoid accidental opens when clicking the pill area.
