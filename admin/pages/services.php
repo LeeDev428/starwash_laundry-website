@@ -141,7 +141,7 @@ startAdminLayout($page_title, $current_page);
                                 <?php echo ucfirst($service['status']); ?>
                             </span>
                         </div>
-                        <div class="service-price">$<?php echo number_format($service['price'], 2); ?></div>
+                        <div class="service-price">₱<?php echo number_format($service['price'], 2); ?></div>
                     </div>
                     
                     <div class="service-body">
