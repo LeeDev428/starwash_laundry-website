@@ -56,8 +56,13 @@ function startAdminLayout($pageTitle = 'Admin Dashboard', $currentPage = '', $ad
             require_once '../components/header.php';
             renderAdminHeader($pageTitle);
             ?>
-            
+
             <div class="admin-content">
+                <!-- In-page title: moved from header to main content so it appears
+                     on the page and not in the header bar (prevents overlap) -->
+                <div class="page-header">
+                    <h2 class="page-title"><?php echo htmlspecialchars($pageTitle); ?></h2>
+                </div>
 <?php
 }
 
