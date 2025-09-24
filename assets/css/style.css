@@ -887,17 +887,20 @@ a:hover {
     top: 50%;
     transform: translateY(-50%);
     color: var(--gray-400);
-    z-index: 1;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .input-group input {
     width: 100%;
-    padding: var(--space-4) var(--space-4) var(--space-4) var(--space-12);
+    /* leave room for left icon and right password toggle */
+    padding: var(--space-4) 64px var(--space-4) calc(var(--space-12));
     border: 2px solid var(--gray-200);
     border-radius: var(--radius);
     font-size: 1rem;
     transition: all var(--transition-fast);
     background: var(--white);
+    min-width: 0; /* prevent overflow inside grid */
 }
 
 .input-group input:focus {
@@ -906,26 +909,34 @@ a:hover {
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
+.form-group.error .input-group input,
 .input-group.error input {
     border-color: var(--error);
 }
 
 .password-toggle {
     position: absolute;
-    right: var(--space-4);
+    right: 14px; /* nudge left so icon sits inside the rounded corner */
     top: 50%;
     transform: translateY(-50%);
-    background: none;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
     border: none;
     color: var(--gray-400);
     cursor: pointer;
-    padding: var(--space-2);
-    border-radius: var(--radius-sm);
-    transition: color var(--transition-fast);
+    padding: 0;
+    border-radius: 6px;
+    transition: color var(--transition-fast), background var(--transition-fast);
+    z-index: 3;
 }
 
 .password-toggle:hover {
     color: var(--gray-600);
+    background: rgba(0,0,0,0.03);
 }
 
 .field-error {
@@ -945,42 +956,68 @@ a:hover {
 }
 
 .checkbox-container {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: var(--space-3);
-    cursor: pointer;
     font-size: 0.875rem;
     color: var(--gray-600);
 }
 
+/* Native checkbox visually hidden but present for accessibility; label.checkmark toggles it */
 .checkbox-container input {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    border: 0;
 }
 
-.checkmark {
-    width: 18px;
-    height: 18px;
+.checkbox-container .checkmark {
+    width: 20px;
+    height: 20px;
     border: 2px solid var(--gray-300);
     border-radius: var(--radius-sm);
     position: relative;
     transition: all var(--transition-fast);
+    display: inline-block;
+    flex: 0 0 20px;
+    background: var(--white);
+    cursor: pointer;
 }
 
-.checkbox-container input:checked + .checkmark {
+.checkbox-container .checkbox-text {
+    margin-left: 6px;
+    color: var(--gray-700);
+}
+
+.checkbox-container .checkbox-text a {
+    color: var(--primary-color);
+}
+
+.checkbox-container input:checked + label.checkmark {
     background: var(--primary-color);
     border-color: var(--primary-color);
 }
 
-.checkbox-container input:checked + .checkmark::after {
+.checkbox-container input:checked + label.checkmark::after {
     content: '';
     position: absolute;
-    left: 4px;
-    top: 1px;
+    left: 5px;
+    top: 2px;
     width: 6px;
     height: 10px;
     border: solid white;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
+}
+
+/* Focus styles when checkbox receives keyboard focus */
+.checkbox-container input:focus + .checkmark {
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
 .forgot-link {
