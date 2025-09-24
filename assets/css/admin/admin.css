@@ -6,6 +6,11 @@
     color: #1a202c;
 }
 
+/* consistent header height used across admin layout */
+:root {
+    --admin-header-height: 72px;
+}
+
 .admin-layout {
     display: flex;
     min-height: 100vh;
@@ -17,9 +22,9 @@
     background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
     border-right: 1px solid #2d3748;
     position: fixed;
-    height: 100vh;
+    height: calc(100vh - var(--admin-header-height));
     left: 0;
-    top: 0;
+    top: var(--admin-header-height);
     overflow-y: auto;
     transition: all 0.3s ease;
     z-index: 1000;
@@ -341,6 +346,7 @@
 .admin-main {
     flex: 1;
     margin-left: 280px;
+    margin-top: var(--admin-header-height);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -358,7 +364,8 @@ html, body {
     /* Purple gradient header used across the admin app */
     background: linear-gradient(90deg, #5b67d6 0%, #6f3f9e 50%, #764ba2 100%);
     color: #ffffff;
-    padding: 1rem 1.25rem; /* balanced padding to avoid clipping */
+    height: var(--admin-header-height);
+    padding: 0 1.25rem; /* balanced horizontal padding */
     display: grid;
     grid-template-columns: auto 1fr auto; /* left auto, center flexible, right auto */
     align-items: center;
@@ -400,6 +407,63 @@ html, body {
     z-index: 1105;
     font-weight: 600;
     color: rgba(255,255,255,0.95);
+}
+
+/* Admin profile page adjustments */
+.admin-profile-page .profile-grid { display: block; max-width: 900px; margin: 1rem auto; }
+.admin-profile-page .profile-grid-left.full-width { width: 100%; }
+.admin-profile-page .profile-form .form-row { margin-bottom: 0.75rem; }
+.admin-profile-page .profile-form .form-row.actions.save-row { margin-top: 0.5rem; margin-bottom: 1rem; }
+.admin-profile-page .profile-form .avatar-controls { margin-top: 0.5rem; display:flex; align-items:center; gap:0.5rem; }
+.admin-profile-page .profile-meta-row { display:flex; align-items:center; gap:0.75rem; margin-top:0.75rem; }
+.admin-profile-page .profile-meta-avatar img, .admin-profile-page .profile-preview-img { width:56px; height:56px; border-radius:9999px; object-fit:cover; }
+.admin-profile-page .profile-avatar-placeholder { font-size:56px; color:#a0aec0; }
+
+/* Position save button under the inputs (right column) */
+.admin-profile-page .profile-form .form-row.actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 0.75rem;
+}
+.admin-profile-page .profile-form .form-row.actions .admin-btn {
+    grid-column: 2;
+    justify-self: center; /* center within the input column */
+}
+
+/* Modernize inputs and label alignment */
+.admin-profile-page .profile-form {
+    padding: 2.5rem 2.75rem;
+}
+.admin-profile-page .profile-form .form-row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1rem 1.25rem;
+    align-items: center; /* vertically center labels and fields */
+}
+.admin-profile-page .profile-form label {
+    text-align: right;
+    color: #4a5568;
+    font-weight: 600;
+    padding-right: 0.5rem;
+}
+.admin-profile-page .profile-form input[type="text"],
+.admin-profile-page .profile-form input[type="email"],
+.admin-profile-page .profile-form input[type="password"] {
+    padding: 0.9rem 1rem;
+    border: 1px solid #e6e9ee;
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 18px rgba(20,24,40,0.04);
+    transition: box-shadow 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+.admin-profile-page .profile-form input:focus {
+    border-color: rgba(102,126,234,0.9);
+    box-shadow: 0 8px 28px rgba(102,126,234,0.08);
+    transform: translateY(-1px);
+    outline: none;
+}
+.admin-profile-page .admin-btn.admin-btn-primary {
+    padding: 0.7rem 1.25rem;
+    border-radius: 0.6rem;
 }
 
 .header-right {
@@ -749,6 +813,20 @@ html, body {
     justify-content: center;
     color: white;
     font-size: 1.25rem;
+}
+
+/* Peso glyph styled like other stat icons */
+.currency-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
 }
 
 .stat-trend {
