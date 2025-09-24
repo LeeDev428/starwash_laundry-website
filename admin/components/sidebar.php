@@ -40,11 +40,16 @@ function renderAdminSidebar($currentPage = '') {
                     <i class="fas fa-cogs"></i>
                     <span>Services</span>
                 </a>
-                <a href="../pages/orders.php" class="nav-item <?php echo $currentPage === 'orders' ? 'active' : ''; ?>">
-                    <i class="fas fa-list-alt"></i>
-                    <span>Orders</span>
-                    <span class="nav-badge new">12</span>
-                </a>
+                <div class="nav-item-wrapper">
+                    <a href="../pages/orders.php" class="nav-item <?php echo $currentPage === 'orders' ? 'active' : ''; ?>">
+                        <i class="fas fa-list-alt"></i>
+                        <span>Orders</span>
+                        <span class="nav-badge new">12</span>
+                    </a>
+                    <button class="panel-toggle-btn" data-panel="orders" aria-label="Open orders panel">
+                        <i class="fas fa-angle-right"></i>
+                    </button>
+                </div>
             </div>
             
             <div class="nav-section">
