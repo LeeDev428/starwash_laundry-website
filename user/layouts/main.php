@@ -43,20 +43,30 @@ function startUserLayout($pageTitle = 'My Dashboard', $currentPage = '', $additi
         require_once '../components/header.php';
         renderUserHeader($pageTitle);
         ?>
-        
-        <div class="user-main">
+
+        <!-- App shell: fixed sidebar + centered dashboard container -->
+        <div class="app-shell">
             <?php
             require_once '../components/sidebar.php';
             renderUserSidebar($currentPage);
             ?>
-            
-            <main class="user-content">
+
+            <div class="app-content-wrap">
+                <div class="dashboard-shell">
+                        <main class="user-content">
+                            <?php if (!empty($pageTitle)): ?>
+                                <div class="page-inner-title">
+                                    <h2><?php echo htmlspecialchars($pageTitle); ?></h2>
+                                </div>
+                            <?php endif; ?>
 <?php
 }
 
 function endUserLayout($additionalJS = []) {
 ?>
-            </main>
+                    </main>
+                </div>
+            </div>
         </div>
     </div>
     
