@@ -110,6 +110,88 @@
     font-weight: 600;
 }
 
+/* Sidebar nav wrapper for items with actions (e.g., open panel) */
+.nav-item-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.panel-toggle-btn {
+    background: none;
+    border: none;
+    color: #cbd5e0;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
+.panel-toggle-btn:hover {
+    background: rgba(102, 126, 234, 0.06);
+    color: #667eea;
+}
+
+/* Orders panel slide-over */
+.admin-orders-panel {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 760px;
+    max-width: 100%;
+    background: white;
+    box-shadow: -8px 0 40px rgba(2,6,23,0.12);
+    transform: translateX(100%);
+    transition: transform 0.28s ease;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-orders-panel[aria-hidden="false"] {
+    transform: translateX(0);
+}
+
+.orders-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #eef2f7;
+}
+
+.orders-panel-controls {
+    padding: 1rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #f7fafc;
+}
+
+.orders-panel-body {
+    padding: 1rem 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orders-table th, .orders-table td {
+    padding: 0.75rem 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid #f7fafc;
+}
+
+.bulk-select {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .nav-item i {
     width: 1.25rem;
     margin-right: 0.75rem;
@@ -167,22 +249,23 @@
 
 /* Admin Header - Light Professional */
 .admin-header {
-    background: white;
-    border-bottom: 1px solid #e2e8f0;
+    /* Use the purple gradient header like the design — solid, no white blur */
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    color: white;
     padding: 1rem 2rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1100;
 }
 
 .header-left {
     display: flex;
     align-items: center;
     gap: 1rem;
+    position: relative;
+    z-index: 1110;
 }
 
 .sidebar-toggle {
@@ -202,15 +285,23 @@
     color: #2d3748;
 }
 
+.header-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 1105;
+}
+
 .header-title h1 {
     margin: 0;
     font-size: 1.75rem;
     font-weight: 700;
-    color: #2d3748;
+    color: white;
 }
 
 .breadcrumb {
-    color: #718096;
+    color: rgba(255,255,255,0.85);
     font-size: 0.875rem;
     font-weight: 500;
 }
@@ -219,6 +310,8 @@
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    position: relative;
+    z-index: 1110;
 }
 
 .header-actions {
@@ -229,27 +322,28 @@
 
 .action-btn {
     position: relative;
-    background: none;
+    background: rgba(255,255,255,0.12);
     border: none;
-    color: #4a5568;
+    color: white;
     font-size: 1.125rem;
     cursor: pointer;
     padding: 0.75rem;
     border-radius: 0.5rem;
     transition: all 0.2s ease;
+    backdrop-filter: none;
 }
 
 .action-btn:hover {
-    background: #f7fafc;
-    color: #2d3748;
+    background: rgba(255,255,255,0.18);
+    color: white;
 }
 
 .action-btn .badge {
     position: absolute;
     top: 0.25rem;
     right: 0.25rem;
-    background: #f56565;
-    color: white;
+    background: #ff84c7;
+    color: #2d3748;
     font-size: 0.75rem;
     padding: 0.125rem 0.375rem;
     border-radius: 9999px;
@@ -328,6 +422,17 @@
     position: relative;
 }
 
+/* Ensure dropdown isn't clipped by parent and appears above other fixed elements */
+.profile-dropdown,
+.profile-pill {
+    overflow: visible;
+}
+
+.profile-pill {
+    position: relative; /* create stacking context for the pill */
+    z-index: 1100; /* sit above sidebar and header elements so menu is visible */
+}
+
 .dropdown-toggle {
     background: none;
     border: none;
@@ -352,8 +457,38 @@
     border-radius: 0.5rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     min-width: 200px;
-    z-index: 1000;
+    /* ensure dropdown sits above the sidebar (which is z-index:1000) and profile pill */
+    z-index: 1200;
     display: none;
+}
+
+/* small offset so menu doesn't butt up against the pill */
+.dropdown-menu {
+    margin-top: 8px;
+}
+
+.profile-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(90deg, rgba(118,75,162,0.12), rgba(102,126,234,0.08));
+    padding: 0.5rem 0.75rem;
+    border-radius: 9999px;
+}
+
+.profile-pill { cursor: pointer; }
+
+.profile-pill .profile-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-menu.show {
+    display: block;
 }
 
 .dropdown-menu.show {
@@ -714,4 +849,79 @@
 
 .admin-sidebar.open {
     animation: slideIn 0.3s ease;
+}
+
+/* Compact Sidebar Panel (icon-only) */
+.admin-sidebar-panel {
+    width: 72px;
+    background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+    border-right: 1px solid #e6eef8;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 2px 0 8px rgba(16,24,40,0.04);
+}
+
+.admin-sidebar-panel .panel-top {
+    padding: 1rem 0;
+}
+
+.admin-sidebar-panel .panel-logo img {
+    width: 36px;
+    height: 36px;
+    display: block;
+}
+
+.admin-sidebar-panel .panel-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    width: 100%;
+    align-items: center;
+}
+
+.admin-sidebar-panel .panel-item {
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    background: transparent;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+.admin-sidebar-panel .panel-item i { font-size: 18px; }
+
+.admin-sidebar-panel .panel-item:hover,
+.admin-sidebar-panel .panel-item.active {
+    background: linear-gradient(90deg, rgba(102,126,234,0.12), rgba(118,75,162,0.08));
+    color: #334155;
+    transform: translateX(3px);
+}
+
+.admin-sidebar-panel .panel-bottom {
+    margin-top: auto;
+    padding: 1rem 0;
+}
+
+.admin-sidebar-panel .panel-lang-select {
+    border: none;
+    background: transparent;
+    color: #475569;
+    font-size: 0.85rem;
+}
+
+/* When using panel mode, push main content right */
+.admin-main.panel-mode {
+    margin-left: 72px;
 }
