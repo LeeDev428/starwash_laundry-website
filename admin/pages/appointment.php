@@ -177,10 +177,10 @@ startAdminLayout($page_title, $current_page);
         
         <div class="stat-card">
             <div class="stat-icon revenue">
-                <i class="fas fa-dollar-sign"></i>
+                <span class="currency-icon">₱</span>
             </div>
             <div class="stat-content">
-                <h3>$<?php echo number_format($stats['total_revenue'], 2); ?></h3>
+                <h3>₱<?php echo number_format($stats['total_revenue'], 2); ?></h3>
                 <p>Total Revenue</p>
             </div>
         </div>
@@ -257,8 +257,8 @@ startAdminLayout($page_title, $current_page);
                                         <span><?php echo htmlspecialchars($appointment['pickup_address']); ?></span>
                                     </div>
                                     <div class="meta-row">
-                                        <i class="fas fa-dollar-sign"></i>
-                                        <span>$<?php echo number_format($appointment['total_price'], 2); ?></span>
+                                        <span class="currency-icon">₱</span>
+                                        <span>₱<?php echo number_format($appointment['total_price'], 2); ?></span>
                                     </div>
                                 </div>
                                 
