@@ -138,7 +138,7 @@ if (!empty($admin['avatar']) && empty($_SESSION['avatar'])) { $_SESSION['avatar'
     <?php endif; ?>
 
     <div class="profile-grid">
-        <div class="profile-grid-left">
+        <div class="profile-grid-left full-width">
             <form method="post" enctype="multipart/form-data" class="profile-form">
                 <div class="form-row">
                     <label for="full_name">Full Name</label>
@@ -156,42 +156,19 @@ if (!empty($admin['avatar']) && empty($_SESSION['avatar'])) { $_SESSION['avatar'
                 </div>
 
                 <div class="form-row">
-                    <label for="password">New Password (leave blank to keep current)</label>
+                    <label for="password">New Password</label>
                     <input type="password" id="password" name="password" placeholder="Enter new password">
                 </div>
 
-                <div class="form-row actions">
+                <div class="form-row actions save-row">
                     <button type="submit" class="admin-btn admin-btn-primary">Save Changes</button>
                 </div>
+
+                <!-- Avatar controls removed per request (server-side handling remains) -->
+
+                <!-- profile meta removed per request -->
             </form>
         </div>
-
-        <aside class="profile-grid-right">
-            <div class="profile-card">
-                <div class="profile-card-avatar">
-                    <?php if (!empty($admin['avatar'])): ?>
-                        <img class="profile-preview-img" src="<?php echo htmlspecialchars($admin['avatar']); ?>" alt="Avatar">
-                    <?php else: ?>
-                        <div class="profile-avatar-placeholder"><i class="fas fa-user-circle"></i></div>
-                    <?php endif; ?>
-                </div>
-
-                <div class="profile-card-actions">
-                    <label class="admin-btn admin-btn-secondary" for="avatar">Change picture</label>
-                    <form method="post" enctype="multipart/form-data" id="avatarUploadForm" style="display:inline-block">
-                        <input type="file" id="avatar" name="avatar" accept="image/*" style="display:none" onchange="document.getElementById('avatarUploadForm').submit();">
-                    </form>
-                    <form method="post" style="display:inline-block;margin-left:.5rem">
-                        <button name="delete_avatar" value="1" class="admin-btn admin-btn-secondary">Delete picture</button>
-                    </form>
-                </div>
-
-                <div class="profile-card-meta">
-                    <h4><?php echo htmlspecialchars($admin['full_name'] ?? ($_SESSION['full_name'] ?? '')); ?></h4>
-                    <p class="muted"><?php echo htmlspecialchars($admin['email'] ?? ''); ?></p>
-                </div>
-            </div>
-        </aside>
     </div>
 </div>
 
