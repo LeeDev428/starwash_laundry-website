@@ -45,7 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = $pdo->prepare("INSERT INTO users (username, email, password, full_name, phone, role) VALUES (?, ?, ?, ?, ?, ?)");
                 
                 if ($stmt->execute([$username, $email, $hashed_password, $full_name, $phone, $role])) {
-                    $success = 'Account created successfully! You can now sign in.';
+                    // Redirect to login after successful registration so the form is cleared
+                    redirectTo('login.php?registered=1');
                 } else {
                     $error = 'Registration failed. Please try again.';
                 }
@@ -186,11 +187,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label class="checkbox-container">
-                        <input type="checkbox" name="terms" required>
-                        <span class="checkmark"></span>
-                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-                    </label>
+                    <div class="checkbox-container">
+                        <input id="terms" type="checkbox" name="terms" required>
+                        <label class="checkmark" for="terms"></label>
+                        <span class="checkbox-text">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-full">
