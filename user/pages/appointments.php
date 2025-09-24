@@ -238,8 +238,8 @@ startUserLayout($page_title, $current_page);
                                     <span><?php echo htmlspecialchars($appointment['pickup_address']); ?></span>
                                 </div>
                                 <div class="detail-row">
-                                    <i class="fas fa-dollar-sign"></i>
-                                    <span>$<?php echo number_format($appointment['total_price'], 2); ?></span>
+                                    <span class="currency-icon">₱</span>
+                                    <span>₱<?php echo number_format($appointment['total_price'], 2); ?></span>
                                 </div>
                             </div>
                             
@@ -285,7 +285,7 @@ startUserLayout($page_title, $current_page);
                                         data-price="<?php echo $service['price']; ?>"
                                         data-description="<?php echo htmlspecialchars($service['description']); ?>"
                                         data-duration="<?php echo htmlspecialchars($service['duration_text']); ?>">
-                                    <?php echo htmlspecialchars($service['service_name']); ?> - $<?php echo number_format($service['price'], 2); ?>
+                                    <?php echo htmlspecialchars($service['service_name']); ?> - ₱<?php echo number_format($service['price'], 2); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -293,7 +293,7 @@ startUserLayout($page_title, $current_page);
                             <p id="serviceDescription"></p>
                             <div class="service-meta">
                                 <span><i class="fas fa-clock"></i> <span id="serviceDuration"></span></span>
-                                <span><i class="fas fa-dollar-sign"></i> $<span id="servicePrice"></span></span>
+                                <span><span class="currency-icon">₱</span> ₱<span id="servicePrice"></span></span>
                             </div>
                         </div>
                     </div>
@@ -344,7 +344,7 @@ startUserLayout($page_title, $current_page);
 
                     <div class="summary-row total">
                         <span>Total Price:</span>
-                        <span id="summaryTotal">$0.00</span>
+                        <span id="summaryTotal">₱0.00</span>
                     </div>
                 </div>
             </div>
@@ -1336,7 +1336,7 @@ function updateServiceDetails() {
     } else {
         detailsDiv.style.display = 'none';
         document.getElementById('summaryService').textContent = '-';
-        document.getElementById('summaryTotal').textContent = '$0.00';
+    document.getElementById('summaryTotal').textContent = '₱0.00';
     }
 }
 
