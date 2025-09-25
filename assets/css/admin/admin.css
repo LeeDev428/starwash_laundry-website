@@ -32,19 +32,7 @@
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
 }
 
-/* vertical accent at the right edge of the sidebar that matches header height */
-.admin-sidebar::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: var(--sidebar-divider-width);
-    height: var(--admin-header-height);
-    background: linear-gradient(90deg, #5b67d6 0%, #6f3f9e 50%, #764ba2 100%);
-    box-shadow: 0 0 14px rgba(118,75,162,0.12);
-    border-left: 1px solid rgba(255,255,255,0.03);
-    z-index: 1099; /* sit just below the header (header z-index: 1100) */
-}
+/* vertical accent removed per user request */
 
 /* Sidebar footer profile button (for icon-only mode) */
 .sidebar-footer {
@@ -120,10 +108,30 @@
 }
 
 .sidebar-header {
-    padding: 2rem 1.5rem;
-    /* softened divider: slightly thinner and lighter */
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 1.7rem 1.5rem;
+    position: relative; /* allow positioned pseudo-element for the divider */
     background: rgba(45, 55, 72, 0.5);
+    /* remove the default border; we'll draw a precise line with the pseudo-element
+       so we can nudge it upward to match the header */
+    border-bottom: none;
+}
+
+/* small variable to nudge the sidebar divider up (reduce to move line up) */
+:root {
+    --sidebar-line-offset: 0px; /* line sits at the bottom of the header area */
+}
+
+/* draw the dark divider via a positioned pseudo-element so we can control its
+   vertical placement precisely relative to the header */
+.sidebar-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #2d3748; /* dark line matching header */
+    /* place the line slightly above the true bottom so it aligns with header */
+    top: calc(100% - var(--sidebar-line-offset));
 }
 
 .sidebar-header .logo {
@@ -530,6 +538,9 @@ html, body {
     text-align: center;
     font-weight: 700;
 }
+
+/* hide header action badge counts (notification bubbles) */
+.action-btn .badge { display: none !important; }
 
 .search-box {
     position: relative;
@@ -1044,6 +1055,35 @@ html, body {
         display: none;
     }
 }
+
+/* Notifications modal */
+.notif-modal { display: none; }
+.notif-modal[aria-hidden="false"] { display: block; position: fixed; inset: 0; z-index: 1300; }
+.notif-modal-backdrop { position: absolute; inset: 0; background: rgba(3,7,18,0.6); }
+.notif-modal-panel {
+    /* use fixed positioning and let JS place the panel next to the bell button */
+    position: fixed;
+    left: auto;
+    top: auto;
+    right: auto;
+    width: 420px;
+    max-width: calc(100% - 2rem);
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(2,6,23,0.25);
+    overflow: hidden;
+    transform-origin: top right;
+}
+.notif-modal-header { display:flex; align-items:center; justify-content:space-between; padding: 1rem 1rem; border-bottom: 1px solid #eef2f7; }
+.notif-modal-header h3 { margin:0; font-size:1rem; color:#2d3748; }
+.notif-close { background:none; border:none; font-size:1.25rem; line-height:1; cursor:pointer; }
+.notif-modal-body { max-height: 48vh; overflow-y:auto; padding: 0.75rem 1rem; }
+.notif-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0.5rem; }
+.notif-item { padding: 0.75rem; border-radius: 8px; background: #fafafa; border: 1px solid #f1f5f9; }
+.notif-item strong { display:block; color:#2d3748; margin-bottom:0.25rem; }
+.notif-item p { margin:0 0 0.25rem 0; color:#4a5568; font-size:0.9rem; }
+.notif-item time { color:#718096; font-size:0.8rem; }
+.notif-item.empty { text-align:center; color:#718096; background:transparent; border:none; padding:1rem 0; }
 
 /* Animations */
 @keyframes pulse {
